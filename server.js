@@ -52,6 +52,12 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+//This is just for testing purpose
+//Need to include in separate route
+app.get("/createpage", (req, res) => {
+  res.render("create");
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
