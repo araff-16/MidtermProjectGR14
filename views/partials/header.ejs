@@ -6,9 +6,19 @@
       <a href = "../displays/favorites">My Favorites</a>
     </div>
 
-    <div>
-      <a href = "../users/login">User Login</a>
-      <a href = "../users/register">Create Account</a>
-    </div>
+    <% if (user_email) { %>
+      <form action="users/logout" method="POST">
+        <div  class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <span >Logged In As: <%= user_email %></span>
+          <button type="submit">Logout</button>
+        </div>
+      </form>
+
+    <% } else { %>
+      <div>
+        <a href = "../users/login">User Login</a>
+        <a href = "../users/register">Create Account</a>
+      </div>
+    <% } %>
   </nav>
 </header>

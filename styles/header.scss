@@ -22,7 +22,6 @@
 #navbar a:hover{
   box-shadow: 5px 5px rgb(49, 48, 48);
   border-radius: 5px;
-
 }
 
 .fa-drafting-compass {
@@ -35,4 +34,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#navbar button {
+  background-color: rgb(78, 78, 78);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  color: black;
+  text-decoration: none;
+}
+
+#navbar button:hover{
+  box-shadow: 5px 5px rgb(49, 48, 48);
+  border-radius: 5px;
 }

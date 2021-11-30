@@ -32,8 +32,8 @@ module.exports = (db) => {
       res.redirect("/displays");
       return;
     }
-
-    res.render("users_login")
+    const templateVars = {user_email: req.session.email}
+    res.render("users_login", templateVars)
   });
 
   //POST LOGIN INFO
@@ -73,7 +73,8 @@ module.exports = (db) => {
       return;
     }
 
-    res.render("users_register")
+    const templateVars = {user_email: req.session.email}
+    res.render("users_register", templateVars)
   });
 
   //POST NEW ACCOUNT INFO
