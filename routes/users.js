@@ -28,12 +28,17 @@ module.exports = (db) => {
 
   // RENDER LOGIN
   router.get("/login", (req,res) => {
-    //JUST NEED TO RENDER THE LOGIN PAGE
+    if (req.session.user_id) {
+      res.redirect("/displays");
+      return;
+    }
+
     res.render("users_login")
   });
 
   //POST LOGIN INFO
   router.post("/login", (req,res) => {
+
     const {
       email,
       password
@@ -52,7 +57,7 @@ module.exports = (db) => {
       else if (response.rows[0].password === password){
         req.session.user_id = response.rows[0].id
         req.session.email = response.rows[0].email;
-        res.send("Login Successful")
+        res.redirect("/displays")
       }else {
         res.send("INCORRECT PASSWORD")
       }
@@ -62,12 +67,18 @@ module.exports = (db) => {
 
   //RENDER CREATE ACCOUNT
   router.get("/register", (req,res) => {
+
+    if (req.session.user_id) {
+      res.redirect("/displays");
+      return;
+    }
+
     res.render("users_register")
   });
 
   //POST NEW ACCOUNT INFO
   router.post("/register", (req,res) => {
-    //NEED TO CHECK IF USER EMAIL EXITS IN DB
+
     const {
       fname,
       lname,
@@ -95,13 +106,22 @@ module.exports = (db) => {
           //Set up cookie with user ids
           req.session.user_id = response.rows[0].id;
           req.session.email = response.rows[0].email;
-          res.send(`<p>NEW ACCOUNT CREATED<p>`)
+          res.redirect('/displays')
         })
         .catch(err => err.message)
       }
     })
     .catch(err => err.message)
   });
+
+  router.post("/logot", (req,res) => {
+    delete req.session.user_id
+    delete req.session.email
+    res.redirect('/displays')
+  })
+
+
+
 
   return router;
 };
