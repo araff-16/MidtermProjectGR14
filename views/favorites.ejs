@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
     <link rel="stylesheet" href="/styles/login_view.css" type="text/css" />
     <link rel="stylesheet" href="/styles/maplist.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/favorites.css" type="text/css" />
 
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
@@ -38,40 +39,17 @@
     <%- include('./partials/header'); %>
 
     <main>
+      <h1 class="titleFavorites">My Favorites</h1>
       <div class="maplistContainer">
-        <img
-          src="https://images.pexels.com/photos/2087748/pexels-photo-2087748.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          wdith="200"
-          height="200"
-        />
+        <div>Image</div>
         <div class="maplistInfo">
           <p>Map Name</p>
           <p>Map Description</p>
           <p>Category</p>
         </div>
         <div>
-          <h1>Created By:</h1>
-          <form class="form-inline" action="/displays/favorites" method="GET">
-            <button class="favButton">Favorite</button>
-          </form>
-        </div>
-      </div>
-      <div class="maplistContainer">
-        <img
-          src="https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          wdith="200"
-          height="200"
-        />
-        <div class="maplistInfo">
-          <p>Map Name</p>
-          <p>Map Description</p>
-          <p>Category</p>
-        </div>
-        <div>
-          <h1>Created By:</h1>
-          <form class="form-inline" action="/displays/favorites" method="GET">
-            <button class="favButton">Favorite</button>
-          </form>
+          <h1>Create By Name</h1>
+          <h1>Test to delete</h1>
         </div>
       </div>
     </main>

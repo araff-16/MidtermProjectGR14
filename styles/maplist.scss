@@ -1,0 +1,16 @@
+.maplistContainer {
+  background-color: grey;
+  width: 90%;
+  justify-content: space-evenly;
+  display: flex;
+  margin: 60px;
+}
+
+.maplistInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.favButton {
+  padding: 5%;
+}
