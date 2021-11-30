@@ -33,6 +33,14 @@ app.use(
 
 app.use(express.static("public"));
 
+//Needed to create encrypted cookies
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: 'session',
+  keys: ['secret key', 'key2'],
+}));
+
+
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");

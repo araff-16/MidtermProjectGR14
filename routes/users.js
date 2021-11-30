@@ -8,6 +8,8 @@
 const express = require("express");
 const router = express.Router();
 
+//const bcrypt = require("bcryptjs");
+
 module.exports = (db) => {
   //SENDS ALL USER DATA
   router.get("/", (req, res) => {
@@ -23,31 +25,94 @@ module.exports = (db) => {
 
   // RENDER LOGIN
   router.get("/login", (req, res) => {
-    //JUST NEED TO RENDER THE LOGIN PAGE
-    res.render("users_login");
+    if (req.session.user_id) {
+      res.redirect("/displays");
+      return;
+    }
+    const templateVars = { user_email: req.session.email };
+    res.render("users_login", templateVars);
   });
 
   //POST LOGIN INFO
   router.post("/login", (req, res) => {
-    res.send("HELLO YOU HAVE LOGGED IN");
+    const { email, password } = req.body;
+
+    console.log(email);
+    db.query(
+      `
+    SELECT * FROM users
+    WHERE email = $1;
+    `,
+      [email]
+    )
+      .then((response) => {
+        console.log(response.rows[0]);
+        if (!response.rows[0]) {
+          res.send("THIS ACCOUNT DOES NOT EXIST");
+        } else if (response.rows[0].password === password) {
+          req.session.user_id = response.rows[0].id;
+          req.session.email = response.rows[0].email;
+          res.redirect("/displays");
+        } else {
+          res.send("INCORRECT PASSWORD");
+        }
+      })
+      .catch((err) => err.message);
   });
 
   //RENDER CREATE ACCOUNT
   router.get("/register", (req, res) => {
-    res.render("users_register");
+    if (req.session.user_id) {
+      res.redirect("/displays");
+      return;
+    }
+
+    const templateVars = { user_email: req.session.email };
+    res.render("users_register", templateVars);
   });
 
   //POST NEW ACCOUNT INFO
   router.post("/register", (req, res) => {
-    //NEED TO CHECK IF USER EMAIL EXITS IN DB
-    //NEED TO INSERT NEW USER INTO DATABSE
-    //AND AUTOMATICALLY LOG USER IN
-    res.send("HELLO YOU HAVE CREATED AN ACCOUNT");
+    const { fname, lname, email, password } = req.body;
+
+    db.query(
+      `
+   SELECT * FROM users
+   WHERE email = $1;
+    `,
+      [email]
+    )
+
+      .then((response) => {
+        if (response.rows[0]) {
+          res.send("THIS ACCOUNT ACCOUNT ALREADY EXISTS");
+        } else {
+          console.log("NEW ACCOUNT CREATED****************************");
+          db.query(
+            `
+        INSERT INTO users (email,first_name,last_name, password)
+        VALUES ($1,$2,$3,$4)
+        RETURNING *;
+        `,
+            [email, fname, lname, password]
+          )
+            .then((response) => {
+              //Set up cookie with user ids
+              req.session.user_id = response.rows[0].id;
+              req.session.email = response.rows[0].email;
+              res.redirect("/displays");
+            })
+            .catch((err) => err.message);
+        }
+      })
+      .catch((err) => err.message);
   });
 
-  //RENDER MAPLIST
-  router.get("/maplist", (req, res) => {
-    res.render("maplist");
+  router.post("/logout", (req, res) => {
+    delete req.session.user_id;
+    delete req.session.email;
+    res.redirect("/displays");
   });
+
   return router;
 };
