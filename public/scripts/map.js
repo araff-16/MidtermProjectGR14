@@ -76,7 +76,8 @@ const contentString =`<form action="/action_page.php" method="get">
 <input type="submit" value="Submit">
 </form>`
 
-// How is this function declared and then called at the same time?
+let tempId = 1;
+
 function initMap() {
 
   const map = new google.maps.Map(document.getElementById("map"), {
@@ -113,21 +114,25 @@ function initMap() {
     }
     let name = "";
     let description = "";
-
+    let price = 0;
     const markerObject = {
       map_id: 3, // get current map id
       name,
       description,
-      price: 0,
+      price,
       position: latLngObject,
-      contentString: `<h1>ID22</h1>
+      contentString: `
+      <h1>${tempId}</h1>
       <form action="/processForm" method="post">
-      <label for="fname">First name:</label>
-      <input type="text" id="fname" value=${name} name="fname"><br><br>
-      <label for="lname">Last name:</label>
-      <input type="text" id="lname" name="lname"><br><br>
-      <input type="submit" value="Submit">
-      </form>`
+      <label for="name">Name:</label>
+      <input type="text" id="name" value=${name} name="name" placeholder="Name of Restaurant"><br><br>
+      <label for="description">Description:</label>
+      <textarea id="description" value=${description} name="description"></textarea><br><br>
+      <label for="price">Price:</label>
+      <input type="number" id="price" value=${price} name="price"><br><br>
+      <input type="submit" id="${tempId}_submit" value="Save Marker">
+      </form>
+      `
     }
 
     addMarker(markerObject);
@@ -139,7 +144,6 @@ function initMap() {
     console.log('markers--->', markers)
   });
 
-  //add listner for submit then we addMarker
 
 
 
@@ -155,8 +159,9 @@ function initMap() {
     let latFromClick = marker.position.lat()
     let lngFromClick = marker.position.lng()
     log('position from addMarker:',marker.position.lng())
-    // how do I make incrementing id numbers that relfelct the next number in teh database?
-    pointOfInterests[9] = {
+
+
+    pointOfInterests[tempId] = {
       map_id: 3, // get current map id
       name: "",
       description: "",
@@ -176,7 +181,9 @@ function initMap() {
 
     })
     // infowindow.open()
+    tempId ++
     markers.push(marker);
+    log('pointOfInterests:', pointOfInterests)
   }
 
 
