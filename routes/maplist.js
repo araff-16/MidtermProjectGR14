@@ -11,7 +11,7 @@ const router = express.Router();
 module.exports = (db) => {
   //SENDS ALL USER DATA
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM users;`)
+    db.query(`SELECT * FROM maps;`)
       .then((data) => {
         const users = data.rows;
         res.json({ users });
@@ -21,10 +21,9 @@ module.exports = (db) => {
       });
   });
 
-  // RENDER LOGIN
-  router.get("/login", (req, res) => {
-    //JUST NEED TO RENDER THE LOGIN PAGE
-    res.render("users_login");
+  // RENDER Maplist
+  router.get("/maplist", (req, res) => {
+    res.render("maplist");
   });
 
   //POST LOGIN INFO
@@ -45,9 +44,6 @@ module.exports = (db) => {
     res.send("HELLO YOU HAVE CREATED AN ACCOUNT");
   });
 
-  //RENDER MAPLIST
-  router.get("/maplist", (req, res) => {
-    res.render("maplist");
-  });
+  //render
   return router;
 };
