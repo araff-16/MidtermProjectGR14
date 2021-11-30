@@ -33,7 +33,7 @@
   <div id="about">
     <img src="/images/profile-hex.png">
     <div>
-      <h2>USER NAME</h2>
+      <h2><%=  user_email %></h2>
       <p>User_BIO</p>
     </div>
   </div>
@@ -42,19 +42,20 @@
     <div id='profile_favorites'>
       <h2>Favorite Maps</h2>
       <ol>
-        <li>Meals under $10</li>
+      <% for(let fav_map of fav_maps) { %>
+        <li><%= fav_map.name %></li>
+      <% } %>
       </ol>
     </div>
 
     <div id='profile_mymaps'>
       <h2>My Maps</h2>
       <ol>
-        <li>Best Taco Places In Torono</li>
-        <li>The Best Steak In Etobicoke</li>
-        <li>Best Greasy Burger Joints</li>
+        <% for(let created_map of created_maps) { %>
+          <li><%= created_map.name %></li>
+        <% } %>
       </ol>
     </div>
-
 
   </section>
 

@@ -44,14 +44,29 @@ module.exports = (db) => {
       return;
     }
 
+    let templateVars = {user_email: req.session.email}
 
+    db.query(`
+    SELECT maps.name FROM maps
+    JOIN favorites ON maps.id = favorites.map_id
+    JOIN users ON users.id = favorites.user_id
+    WHERE users.id = $1;
+    `, [req.session.user_id])
+    .then (response => {
+      templateVars.fav_maps=response.rows
 
+      db.query(`
+      SELECT name FROM maps
+      WHERE user_id = $1;
+      `, [req.session.user_id])
+      .then (response => {
+        templateVars.created_maps=response.rows
+        res.render("displays_profile", templateVars)
+      })
+      .catch(err => err.message)
+    })
+    .catch(err => err.message)
 
-
-
-
-    const templateVars = {user_email: req.session.email}
-    res.render("displays_profile", templateVars )
   });
 
   return router;
