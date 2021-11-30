@@ -13,9 +13,8 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM maps;`)
       .then((data) => {
+        //how to trigger the log? On page render doesn't work, also do I
         console.log(data.rows);
-        const users = data.rows;
-        res.json({ users });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -39,7 +38,8 @@ module.exports = (db) => {
   });
 
   //RENDERS VIEW MAP PAGE
-  router.get("/viewmap", (req, res) => {
+  router.get("/viewmap/:id", (req, res) => {
+    req.params.id;
     res.send("<p>VIEW MAP PAGE</p>");
   });
   // ------------------------------------------------------------------Post
