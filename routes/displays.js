@@ -37,9 +37,14 @@ module.exports = (db) => {
   });
 
   //RENDERS MY PROFILE PAGE
-  router.post("/profile", (req,res) => {
+  router.get("/profile", (req,res) => {
+
+    if (!req.session.user_id) {
+      res.redirect("/displays");
+      return;
+    }
     const templateVars = {user_email: req.session.email}
-    res.send("<p>My Profile Page</p>")
+    res.render("displays_profile", templateVars )
   });
 
   return router;
