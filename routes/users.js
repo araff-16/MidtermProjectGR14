@@ -115,7 +115,7 @@ module.exports = (db) => {
     .catch(err => err.message)
   });
 
-  router.post("/logot", (req,res) => {
+  router.post("/logout", (req,res) => {
     delete req.session.user_id
     delete req.session.email
     res.redirect('/displays')
