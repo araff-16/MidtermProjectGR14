@@ -43,6 +43,13 @@ module.exports = (db) => {
       res.redirect("/displays");
       return;
     }
+
+
+
+
+
+
+
     const templateVars = {user_email: req.session.email}
     res.render("displays_profile", templateVars )
   });
