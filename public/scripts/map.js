@@ -78,8 +78,10 @@ function initMap() {
     let latitude = newest_marker.position.lat()
     let longitude =newest_marker.position.lng()
 
+    let map_id = $('#map_id').text()
+
     let poi={
-      map_id: 1,
+      map_id,
       title,
       description,
       image,
@@ -87,12 +89,15 @@ function initMap() {
       longitude,
     }
 
-    pois.push(JSON.stringify(poi))
+    pois.push((poi))
     $('#title').val('')
     $('#description').val('')
     $('#image').val('')
     $("#mainForm").slideUp("slow")
     $("#list").append(`<li>${title} <button id = ${markers.length-1}>DELETE</button> </li>`)
+    $(`#${markers.length-1}`).click(() => {
+
+    })
 
     marker_in_progress = false;
   });
@@ -119,7 +124,18 @@ function initMap() {
 
   $('#submit_map').click(() => {
 
-    $.post("../displays/submit_map", 'hello')
+    $.post("../displays/submit_map", {pois}).done(function(data){
+
+      if (data === 'DONE'){
+        console.log(data)
+
+        location.href = "/displays"
+      }else {
+        console.log('SOMETHING WENT WRONG')
+      }
+
+    })
+
   })
 
 }
