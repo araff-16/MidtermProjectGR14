@@ -9,6 +9,7 @@ map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE,
 latitude NUMERIC,
 longitude NUMERIC,
 created_at TIMESTAMP,
-custom_order INTEGER
+custom_order INTEGER,
+image VARCHAR
 );
 

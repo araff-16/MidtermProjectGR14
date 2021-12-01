@@ -2,11 +2,11 @@
 //HOW DO WE RECIEVE MAP ID
 
 //ACCESS map_id through hidden value on webpage after passing through templatevars
-
+//TEST IMAGE https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324_square.jpg
 
 let map;
 let markers = []
-let pois = []
+let pois = {}
 
 //removes default markers
 var myStyles =[
@@ -63,7 +63,7 @@ function initMap() {
       <div id="bodyContent">
       <p>${description}</p>
       </div>
-      ${image}
+      <img src=${image} >
       </div>`
     });
 

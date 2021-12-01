@@ -126,7 +126,7 @@ module.exports = (db) => {
 
 
     pois_array.forEach(poi=>{
-      db.query(`INSERT INTO pois (name, description,latitude,longitude,map_id) VALUES ($1,$2,$3,$4,$5) RETURNING *`,[poi.title,poi.description,poi.latitude,poi.longitude,poi.map_id]).then(response =>{
+      db.query(`INSERT INTO pois (name, description,latitude,longitude,map_id,image) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`,[poi.title,poi.description,poi.latitude,poi.longitude,poi.map_id,poi.image]).then(response =>{
         count += 1;
         if (count === pois_array.length){
           res.send('DONE')
