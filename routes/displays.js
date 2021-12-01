@@ -55,33 +55,40 @@ module.exports = (db) => {
   });
   // ------------------------------------------------------------------Post
   //RENDERS MY PROFILE PAGE
-  router.post("/profile", (req, res) => {
-    const templateVars = { user_email: req.session.email };
-    res.send("<p>My Profile Page</p>");
-  });
+  router.get("/profile", (req, res) => {
+    if (!req.session.user_id) {
+      res.redirect("/displays");
+      return;
+    }
 
-  router.post("/favorites", (req, res) => {
-    //NEED TO QUERY TO THE DATABASE TO GET ALL favorited maps for user
-    //WILL STORE IN TEMPLATVARS AND SEND WITH RENDER
-    const templateVars = { user_email: req.session.email };
-    res.render("favorites", templateVars);
-  });
+    let templateVars = { user_email: req.session.email };
 
-  //POST FOR MAPLIST - WRITE FAVORITE TO DATABASE
-  router.post("/", (req, res) => {
-    // db.query(`INSERT INTO * FROM maps;`)
-    //   .then((data) => {
-    //     //mapObject will be an array of Objects, loop through in the ejs file
-    //     let mapObject = data.rows;
-    //     const templateVars = {
-    //       user_email: req.session.email,
-    //       maplistObject: mapObject,
-    //     };
-    //     res.render("maplist", templateVars);
-    //   })
-    //   .catch((err) => {
-    //     res.status(500).json({ error: err.message });
-    //   });
+    db.query(
+      `
+    SELECT maps.name FROM maps
+    JOIN favorites ON maps.id = favorites.map_id
+    JOIN users ON users.id = favorites.user_id
+    WHERE users.id = $1;
+    `,
+      [req.session.user_id]
+    )
+      .then((response) => {
+        templateVars.fav_maps = response.rows;
+
+        db.query(
+          `
+      SELECT name FROM maps
+      WHERE user_id = $1;
+      `,
+          [req.session.user_id]
+        )
+          .then((response) => {
+            templateVars.created_maps = response.rows;
+            res.render("displays_profile", templateVars);
+          })
+          .catch((err) => err.message);
+      })
+      .catch((err) => err.message);
   });
 
   return router;
