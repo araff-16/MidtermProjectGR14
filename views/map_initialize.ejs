@@ -14,47 +14,29 @@
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/header.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/create.css" type="text/css" />
 
   <!-- External JS -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
 
   <!-- App JS -->
   <script type="text/javascript" src="/scripts/app.js"></script>
-  <script type="text/javascript" src="/scripts/map.js"></script>
 </head>
 
 <body>
   <!-- Pulling in nav bar -->
   <%- include('./partials/header'); %>
-
   <main>
-    <section id ="mainForm">
-      <form>
-      <label for="title">Title:</label>
+    <section id ="initialize_map">
+      <form action= "../displays/initialize_map" method= "POST">
+      <label for="title">Title Of Map:</label>
       <input type="text" id="title" name="title"><br><br>
-      <label for="description">Description:</label>
+      <label for="description">Description Of Map:</label>
       <input type="text" id="description" name="description"><br><br>
-      <label for="image">Image:</label>
+      <label for="image">Image For Map:</label>
       <input type="text" id="image" name="image"><br><br>
       <input type="submit" value="Submit">
       </form>
     </section>
-    <div id="map"></div>
-
-    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&channel=2"
-      async
-    ></script>
-
-    <div id="locationlist">
-      <h1><%= title %></h1>
-      <ol id ='list'>
-      </ol>
-
-      <button id='submit_map'>Finalize</button>
-    </div>
   </main>
 </body>
 
