@@ -5,6 +5,7 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
+const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 
@@ -13,14 +14,24 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM maps;`)
       .then((data) => {
-        //how to trigger the log? On page render doesn't work, also do I
-        console.log(data.rows);
+        //mapObject will be an array of Objects, loop through in the ejs file
+        let mapObject = data.rows;
+        const templateVars = {
+          user_email: req.session.email,
+          maplistObject: mapObject,
+        };
+        // console.log(data.rows);
+        console.log("test4", mapObject);
+
+        // for (let mapInfo of data.rows) {
+        //   console.log("test1", mapInfo.name);
+        //   console.log("test2", mapInfo.id);
+        // }
+        res.render("maplist", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
-    const templateVars = { user_email: req.session.email };
-    res.render("maplist", templateVars);
   });
 
   //RENDER FAVORITES FOR PARTICULAR USER
@@ -54,6 +65,23 @@ module.exports = (db) => {
     //WILL STORE IN TEMPLATVARS AND SEND WITH RENDER
     const templateVars = { user_email: req.session.email };
     res.render("favorites", templateVars);
+  });
+
+  //POST FOR MAPLIST - WRITE FAVORITE TO DATABASE
+  router.post("/", (req, res) => {
+    // db.query(`INSERT INTO * FROM maps;`)
+    //   .then((data) => {
+    //     //mapObject will be an array of Objects, loop through in the ejs file
+    //     let mapObject = data.rows;
+    //     const templateVars = {
+    //       user_email: req.session.email,
+    //       maplistObject: mapObject,
+    //     };
+    //     res.render("maplist", templateVars);
+    //   })
+    //   .catch((err) => {
+    //     res.status(500).json({ error: err.message });
+    //   });
   });
 
   return router;

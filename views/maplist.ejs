@@ -31,6 +31,7 @@
 
     <!-- App JS -->
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/maplist.js"></script>
   </head>
 
   <body>
@@ -38,45 +39,24 @@
     <%- include('./partials/header'); %>
 
     <main>
+      <% for(let object of maplistObject) { %>
+
       <div class="maplistContainer">
-        <img
-          src="https://images.pexels.com/photos/2087748/pexels-photo-2087748.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          wdith="200"
-          height="200"
-        />
+        <img src="<%= object.pic_url %>" wdith="200" height="200" />
         <div class="maplistInfo">
-          <p>Map Name</p>
-          <p>Map Description</p>
-          <p>Category</p>
+          <p>Map Name: <%= object.name %></p>
+          <p>Description: <%=object.description %></p>
+          <p>Category: <%=object.category %></p>
         </div>
         <div>
           <h1>Created By:</h1>
-          <form class="form-inline" action="/displays/favorites" method="GET">
-            <button class="favButton">Favorite</button>
+          <form class="form-inline favorite-form" action="/" method="POST">
+            <input type="hidden" name="mapId" value="<%= object.id %>" />
+            <button type="submit" class="favButton">Favorite</button>
           </form>
         </div>
       </div>
-      <div class="maplistContainer">
-        <img
-          src="https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          wdith="200"
-          height="200"
-        />
-        <div class="maplistInfo">
-          <p>Map Name</p>
-          <p>Map Description</p>
-          <p>Category</p>
-        </div>
-        <div>
-          <h1>Created By:</h1>
-          <form class="form-inline" action="/displays/favorites" method="GET">
-            <button class="favButton">Favorite</button>
-          </form>
-          <form class="form-inline" action="/displays/viewmap" method="GET">
-            <button class="favButton">View Map</button>
-          </form>
-        </div>
-      </div>
+      <% } %>
     </main>
   </body>
 </html>
