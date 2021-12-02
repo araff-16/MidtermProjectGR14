@@ -10,16 +10,16 @@ const router = express.Router();
 
 module.exports = (db) => {
   //SENDS ALL USER DATA
-  router.get("/", (req, res) => {
-    db.query(`SELECT * FROM maps;`)
-      .then((data) => {
-        const users = data.rows;
-        res.json({ users });
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
-  });
+  // router.get("/", (req, res) => {
+  //   db.query(`SELECT * FROM maps;`)
+  //     .then((data) => {
+  //       const users = data.rows;
+  //       res.json({ users });
+  //     })
+  //     .catch((err) => {
+  //       res.status(500).json({ error: err.message });
+  //     });
+  // });
 
   // RENDER Maplist
   router.get("/maplist", (req, res) => {
