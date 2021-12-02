@@ -28,33 +28,36 @@
   <%- include('./partials/header'); %>
 
   <main>
-  <h1> MY PROFILE</h1>
 
   <div id="about">
     <img src="/images/profile-hex.png">
     <div>
       <h2><%=  user_email %></h2>
-      <p>User_BIO</p>
+      <p>Hello Everyone!! This app is amazing. Looking for a good place to eat is not the most enjoyable task. With this app I have access to hundreds of lists of great spots hand selected by users. I can't wait to select my next place to eat and share with you the maps I create of my top restaurants.</p>
     </div>
   </div>
 
   <section id='lists'>
     <div id='profile_favorites'>
       <h2>Favorite Maps</h2>
+      <div class='list'>
       <ol>
       <% for(let fav_map of fav_maps) { %>
         <li><%= fav_map.name %></li>
       <% } %>
       </ol>
     </div>
+    </div>
 
     <div id='profile_mymaps'>
-      <h2>My Maps</h2>
+      <h2>Maps Created</h2>
+      <div class='list'>
       <ol>
         <% for(let created_map of created_maps) { %>
           <li><%= created_map.name %></li>
         <% } %>
       </ol>
+    </div>
     </div>
 
   </section>
