@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  console.log("hello");
   $(".favorite-form").submit(function (event) {
     event.preventDefault();
     const formData = $(this).serialize();

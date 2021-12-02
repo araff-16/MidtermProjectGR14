@@ -101,10 +101,10 @@ module.exports = (db) => {
   });
 
   //RENDERS VIEW MAP PAGE
-  router.get("/viewmap/:id", (req, res) => {
-    req.params.id;
-    res.send("<p>VIEW MAP PAGE</p>");
-  });
+  // router.get("/viewmap/:id", (req, res) => {
+  //   req.params.id;
+  //   res.send("<p>VIEW MAP PAGE</p>");
+  // });
   // ------------------------------------------------------------------Post
   //RENDERS MY PROFILE PAGE
   router.get("/profile", (req, res) => {
@@ -141,6 +141,52 @@ module.exports = (db) => {
           .catch((err) => err.message);
       })
       .catch((err) => err.message);
+  });
+
+  router.get("/initialize_map", (req, res) => {
+    const templateVars = { user_email: req.session.email };
+    res.render("map_initialize", templateVars);
+  });
+
+  router.post("/initialize_map", (req, res) => {
+    let title = req.body.title;
+    let description = req.body.description;
+    let image = req.body.image;
+    let food_category = req.body.category;
+
+    db.query(
+      `INSERT INTO maps (name, description, pic_URL, category, user_id)
+    VALUES ($1,$2,$3,$4,$5) RETURNING *`,
+      [title, description, image, food_category, req.session.user_id]
+    ).then((response) => {
+      let map_id = response.rows[0].id;
+      const templateVars = { user_email: req.session.email, title, map_id };
+      res.render("create", templateVars);
+    });
+  });
+
+  router.post("/submit_map", (req, res) => {
+    const pois_array = req.body.pois;
+    let count = 0;
+
+    pois_array.forEach((poi) => {
+      db.query(
+        `INSERT INTO pois (name, description,latitude,longitude,map_id,image) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`,
+        [
+          poi.title,
+          poi.description,
+          poi.latitude,
+          poi.longitude,
+          poi.map_id,
+          poi.image,
+        ]
+      ).then((response) => {
+        count += 1;
+        if (count === pois_array.length) {
+          res.send("DONE");
+        }
+      });
+    });
   });
 
   return router;
