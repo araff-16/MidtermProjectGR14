@@ -51,7 +51,8 @@ module.exports = (db) => {
               user_email: req.session.email,
               maplistObject: mapsWithFavoriteData,
             };
-            console.log(mapsWithFavoriteData);
+            console.log('mapsWithFavoriteData:', mapsWithFavoriteData);
+            console.log('templateVars:', templateVars)
             res.render("maplist", templateVars);
             // favoritesData.rows.forEach((fav) => {});
           })

@@ -18,15 +18,15 @@ $(document).ready(function () {
         $(this).children("button.favButton").html("unfavorite");
       });
     }
-    //SEND A REQUEST TO DELETE AND CHANGE BACK TO BUTTON TO FAVORITE
-  //   if ($currentButton.html() === "unfavorites") {
-  //     $.ajax("/favorites", {
-  //       method: "DELETE",
-  //       dataType: "string",
-  //       data: $(this).serialize(),
-  //     }).then((response) => {
-  //       $(this).children("button.favButton").html("favorite");
-  //   }
-  //  )});
-
+      //SEND A REQUEST TO DELETE AND CHANGE BACK TO BUTTON TO FAVORITE
+    //   if ($currentButton.html() === "unfavorites") {
+    //     $.ajax("/favorites", {
+    //       method: "DELETE",
+    //       dataType: "string",
+    //       data: $(this).serialize(),
+    //     }).then((response) => {
+    //       $(this).children("button.favButton").html("favorite");
+    //   }
+    //  )});
+  });
 });

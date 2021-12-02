@@ -48,6 +48,7 @@
           <p>Map Name: <%= object.name %></p>
           <p>Description: <%=object.description %></p>
           <p>Category: <%=object.category %></p>
+          <button onclick="location.href='/viewmap/<%= object.id %>';" >View Map</button>
         </div>
         <div>
           <h1><%= object.name %>:</h1>
