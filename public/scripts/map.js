@@ -6,18 +6,20 @@
 
 let map;
 let markers = []
-let pois = {}
+let pois = []
 
 //removes default markers
-var myStyles =[
+var myStyles = [
   {
-      featureType: "poi",
-      elementType: "labels",
-      stylers: [
-            { visibility: "off" }
-      ]
+    featureType: "poi",
+    elementType: "labels",
+    stylers: [
+      { visibility: "off" }
+    ]
   }
 ];
+
+let count = 1;
 
 function initMap() {
 
@@ -31,7 +33,7 @@ function initMap() {
 
   map.addListener("click", (event) => {
 
-    if (!marker_in_progress){
+    if (!marker_in_progress) {
 
       marker_in_progress = true;
 
@@ -39,24 +41,24 @@ function initMap() {
 
       // ADD BOOLEAN TO CHECK IF TRUE OR FALSE
       // RETURN OUT OF THIS IF FALSE
-
-      addMarker(event.latLng);
+      count = count +1
+      addMarker(event.latLng,count);
     }
     return
   });
 
-  $( "#mainForm" ).submit(function( event ) {
+  $("#mainForm").submit(function (event) {
     event.preventDefault()
 
     let title = event.target.title.value
     let description = event.target.description.value
     let image = event.target.image.value
 
-    let newest_marker = markers[markers.length-1]
+    let newest_marker = markers[markers.length - 1]
 
     const infowindow = new google.maps.InfoWindow({
       content:
-      `<div id="content">
+        `<div id="content">
       <div id="siteNotice">
       </div>
       <h1 id="firstHeading" class="firstHeading">${title}</h1>
@@ -76,11 +78,12 @@ function initMap() {
     })
 
     let latitude = newest_marker.position.lat()
-    let longitude =newest_marker.position.lng()
+    let longitude = newest_marker.position.lng()
 
     let map_id = $('#map_id').text()
 
-    let poi={
+    let poi = {
+      myid:count,
       map_id,
       title,
       description,
@@ -94,9 +97,17 @@ function initMap() {
     $('#description').val('')
     $('#image').val('')
     $("#mainForm").slideUp("slow")
-    $("#list").append(`<li>${title} <button id = ${markers.length-1}>DELETE</button> </li>`)
-    $(`#${markers.length-1}`).click(() => {
+    $("#list").append(`<li>${title} <button id = ${count}>DELETE</button> </li>`)
 
+    $(`#${count}`).click((event) => {
+      const targetmarker = markers.find(x => x.myid === parseInt($(event.target).attr('id')))
+      targetmarker.setMap(null)
+
+      markers = markers.filter(x => x.myid != parseInt($(event.target).attr('id')))
+      pois = pois.filter(x => x.myid != parseInt($(event.target).attr('id')))
+      //setMapOnAll(map)
+
+      $(event.target).parent().remove();
     })
 
     marker_in_progress = false;
@@ -105,12 +116,13 @@ function initMap() {
   //add listner for submit then we addMarker
 
   // function to add markers to map
-  function addMarker(position, data) {
+  function addMarker(position, myid) {
     const marker = new google.maps.Marker({
       position,
       map,
     });
-
+    console.log('COUNTER', count)
+    marker.myid = myid
     markers.push(marker);
   }
 
@@ -124,13 +136,13 @@ function initMap() {
 
   $('#submit_map').click(() => {
 
-    $.post("../displays/submit_map", {pois}).done(function(data){
+    $.post("../displays/submit_map", { pois }).done(function (data) {
 
-      if (data === 'DONE'){
+      if (data === 'DONE') {
         console.log(data)
 
         location.href = "/displays"
-      }else {
+      } else {
         console.log('SOMETHING WENT WRONG')
       }
 
