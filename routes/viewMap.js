@@ -20,7 +20,7 @@ module.exports = (db) => {
     console.log('mapId', mapId);
 
     const queryString = `
-    SELECT name, description, latitude, longitude
+    SELECT name, description, latitude, longitude, image
     FROM pois
     WHERE map_id = $1
     `
