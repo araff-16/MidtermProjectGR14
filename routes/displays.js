@@ -129,7 +129,7 @@ module.exports = (db) => {
 
         db.query(
           `
-      SELECT name FROM maps
+      SELECT name, id FROM maps
       WHERE user_id = $1;
       `,
           [req.session.user_id]

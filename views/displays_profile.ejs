@@ -54,9 +54,10 @@
       <div class='list'>
       <ol>
         <% for(let created_map of created_maps) { %>
-          <li><%= created_map.name %> <button>EDIT</button></li>
+          <li><%= created_map.name %> <a href="../editmap/<%= created_map.id %>">EDIT MAP</a></li>
         <% } %>
       </ol>
+
     </div>
     </div>
 
