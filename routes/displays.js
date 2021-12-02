@@ -51,10 +51,10 @@ module.exports = (db) => {
   });
 
   //RENDERS VIEW MAP PAGE
-  router.get("/viewmap/:id", (req, res) => {
-    req.params.id;
-    res.send("<p>VIEW MAP PAGE</p>");
-  });
+  // router.get("/viewmap/:id", (req, res) => {
+  //   req.params.id;
+  //   res.send("<p>VIEW MAP PAGE</p>");
+  // });
   // ------------------------------------------------------------------Post
   //RENDERS MY PROFILE PAGE
   router.get("/profile", (req, res) => {
