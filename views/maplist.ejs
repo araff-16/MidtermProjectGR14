@@ -37,6 +37,7 @@
   <body>
     <!-- Pulling in nav bar -->
     <%- include('./partials/header'); %>
+    <h1 class="title">All Maps</h1>
 
     <main>
       <% for(let object of maplistObject) { %>
@@ -49,10 +50,14 @@
           <p>Category: <%=object.category %></p>
         </div>
         <div>
-          <h1>Created By:</h1>
-          <form class="form-inline favorite-form" action="/" method="POST">
+          <h1><%= object.name %>:</h1>
+          <form class="form-inline favorite-form">
             <input type="hidden" name="mapId" value="<%= object.id %>" />
-            <button type="submit" class="favButton">Favorite</button>
+            <% if(object.favorited) { %>
+            <button type="submit" class="unfavButton">unfavorite</button>
+            <% } else { %>
+            <button type="submit" class="favButton">favorite</button>
+            <% } %>
           </form>
         </div>
       </div>

@@ -40,18 +40,24 @@
 
     <main>
       <h1 class="titleFavorites">My Favorites</h1>
+      <% for(let object of userFavorites) { %>
+
       <div class="maplistContainer">
-        <div>Image</div>
+        <img src="<%= object.pic_url %>" wdith="200" height="200" />
         <div class="maplistInfo">
-          <p>Map Name</p>
-          <p>Map Description</p>
-          <p>Category</p>
+          <p>Map Name: <%= object.name %></p>
+          <p>Description: <%=object.description %></p>
+          <p>Category: <%=object.category %></p>
         </div>
         <div>
-          <h1>Create By Name</h1>
-          <h1>Test to delete</h1>
+          <h1><%= object.name %>:</h1>
+          <form class="form-inline favorite-form" action="/" method="POST">
+            <input type="hidden" name="mapId" value="<%= object.id %>" />
+            <button type="submit" class="favButton">Favorite</button>
+          </form>
         </div>
       </div>
+      <% } %>
     </main>
   </body>
 </html>
