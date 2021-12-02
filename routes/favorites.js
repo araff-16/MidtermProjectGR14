@@ -5,6 +5,10 @@ module.exports = (db) => {
   router.post("/", (req, res) => {
     const { mapId } = req.body;
     const { user_id } = req.session;
+    // db.query(`
+    // SELECT * favorites
+    // WHERE map_id = $1 and user_id = $2
+    // `)
     const queryString = `
         INSERT INTO FAVORITES (user_id, map_id)
         VALUES ($1, $2)

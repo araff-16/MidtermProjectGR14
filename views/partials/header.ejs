@@ -1,25 +1,25 @@
 <header>
-  <nav id='navbar'>
+  <nav id="navbar">
     <div id="icon">
-      <i class="fas fa-drafting-compass"></i>
-      <a href = "../displays/initialize_map">Create Map</a>
-      <a href = "../displays/favorites">My Favorites</a>
-      <a href = "../displays/profile">My Profile</a>
+      <a href="../displays"><i class="fas fa-drafting-compass"></i></a>
+      <a href="../displays/initialize_map">Create Map</a>
+      <a href="../displays/favorites">My Favorites</a>
+      <a href="../displays/profile">My Profile</a>
     </div>
 
     <% if (user_email) { %>
-      <form action="../users/logout" method="POST">
-        <div  class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <span >Logged In As: <%= user_email %></span>
-          <button type="submit">Logout</button>
-        </div>
-      </form>
+    <form action="../users/logout" method="POST">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <span>Logged In As: <%= user_email %></span>
+        <button type="submit">Logout</button>
+      </div>
+    </form>
 
     <% } else { %>
-      <div>
-        <a href = "../users/login">User Login</a>
-        <a href = "../users/register">Create Account</a>
-      </div>
+    <div>
+      <a href="../users/login">User Login</a>
+      <a href="../users/register">Create Account</a>
+    </div>
     <% } %>
   </nav>
 </header>
