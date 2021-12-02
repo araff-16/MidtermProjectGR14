@@ -10,66 +10,6 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-  //RENDER LIST VIEW OF ALL MAPS
-  router.get("/", (req, res) => {
-    const queryString = `
-    SELECT *
-    FROM maps
-    `;
-    db.query(queryString)
-      .then((mapData) => {
-        console.log(mapData.rows);
-        // mapObject will be an array of Objects, loop through in the ejs file
-        let mapObject = mapData.rows;
-
-        console.log("test4", mapObject);
-
-        const { user_id } = req.session;
-
-        const favoritesQueryString = `
-        SELECT * FROM favorites
-        WHERE user_id = $1
-        `;
-        const favoritesQueryValues = [user_id];
-
-        db.query(favoritesQueryString, favoritesQueryValues)
-          .then((favoritesData) => {
-            // console.log(favoritesData.rows);
-            const mapsWithFavoriteData = mapObject.map((map) => {
-              const mapExistInFavorite = favoritesData.rows.some((fav) => {
-                return fav.map_id === map.id;
-              });
-              if (mapExistInFavorite) {
-                const mapCopy = { ...map };
-                mapCopy["favorited"] = true;
-                return mapCopy;
-              } else {
-                return map;
-              }
-            });
-            const templateVars = {
-              user_email: req.session.email,
-              maplistObject: mapsWithFavoriteData,
-            };
-            console.log('mapsWithFavoriteData:', mapsWithFavoriteData);
-            console.log('templateVars:', templateVars)
-            res.render("maplist", templateVars);
-            // favoritesData.rows.forEach((fav) => {});
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        // for (let mapInfo of data.rows) {
-        //   console.log("test1", mapInfo.name);
-        //   console.log("test2", mapInfo.id);
-        // }
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-
   //RENDER FAVORITES FOR PARTICULAR USER
   router.get("/favorites", (req, res) => {
     //NEED TO QUERY TO THE DATABASE TO GET ALL favorited maps for user

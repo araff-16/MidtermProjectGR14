@@ -55,7 +55,12 @@
         </div>
         <div>
           <form class="form-inline favorite-form">
-            <input type="hidden" name="mapId" value="<%= object.id %>" />
+            <input
+              type="hidden"
+              class="favButton"
+              name="mapId"
+              value="<%= object.id %>"
+            />
             <% if(object.favorited) { %>
             <button type="submit" class="unfavButton btn btn-secondary">unfavorite</button>
             <% } else { %>
