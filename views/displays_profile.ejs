@@ -52,14 +52,13 @@
     <div id='profile_mymaps'>
       <h2>Maps Created</h2>
       <div class='list'>
-      <ol>
-        <% for(let created_map of created_maps) { %>
-          <li><%= created_map.name %> <button>EDIT</button></li>
-        <% } %>
-      </ol>
+        <ol>
+          <% for(let created_map of created_maps) { %>
+            <li><%= created_map.name %> <a href="../editmap/<%= created_map.id %>">EDIT MAP</a></li>
+          <% } %>
+        </ol>
+      </div>
     </div>
-    </div>
-
   </section>
 
 

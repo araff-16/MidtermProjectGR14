@@ -81,7 +81,7 @@ function initMap() {
       <h1 id="firstHeading" class="firstHeading">${poi.name}</h1>
       <div id="bodyContent">
       <p>${poi.description}</p>
-
+      <img src="${poi.image}" width="100px;">
       `,
       maxWidth: 300,
     });
