@@ -27,19 +27,19 @@
 <body>
   <!-- Pulling in nav bar -->
   <%- include('./partials/header'); %>
-
+  <section id ="mainForm">
+    <form>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title">
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description">
+    <label for="image">Image URL:</label>
+    <input type="text" id="image" name="image">
+    <input id="submit_poi_info" type="submit" value="Submit">
+    </form>
+  </section>
   <main>
-    <section id ="mainForm">
-      <form>
-      <label for="title">Title:</label>
-      <input type="text" id="title" name="title"><br><br>
-      <label for="description">Description:</label>
-      <input type="text" id="description" name="description"><br><br>
-      <label for="image">Image:</label>
-      <input type="text" id="image" name="image"><br><br>
-      <input type="submit" value="Submit">
-      </form>
-    </section>
+
     <div id="map"></div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
@@ -49,11 +49,12 @@
     ></script>
 
     <div id="locationlist">
+      <span id='map_id'><%= map_id %></span>
       <h1><%= title %></h1>
       <ol id ='list'>
       </ol>
 
-      <button id='submit_map'>Finalize</button>
+      <button id='submit_map'>Submit Map</button>
     </div>
   </main>
 </body>
