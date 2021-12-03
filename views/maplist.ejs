@@ -89,18 +89,19 @@
               <% if(object.favorited) { %> unfavorite <% } else { %> favorite <%
               } %>
             </button>
-            <button
-              class="btn btn-primary"
-              onclick="location.href='/viewmap/<%= object.id %>';"
-            >
-              View Map
-            </button>
+
             <!-- <% if(object.favorited) { %>
             <button type="submit" class="unfavButton btn btn-secondary">unfavorite</button>
             <% } else { %>
             <button type="submit" class="favButton btn btn-secondary">favorite</button>
             <% } %> -->
           </form>
+          <button
+            class="btn btn-primary"
+            onclick="location.href='/viewmap/<%= object.id %>';"
+          >
+            View Map
+          </button>
         </div>
       </div>
       <% } %>
