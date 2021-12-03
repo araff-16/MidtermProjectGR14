@@ -50,7 +50,7 @@ module.exports = (db) => {
   //RENDERS MY PROFILE PAGE
   router.get("/profile", (req, res) => {
     if (!req.session.user_id) {
-      res.redirect("/displays");
+      res.redirect("/maplists");
       return;
     }
 

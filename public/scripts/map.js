@@ -138,7 +138,7 @@ function initMap() {
       if (data === "DONE") {
         console.log(data);
 
-        location.href = "/displays";
+        location.href = "/maplist";
       } else {
         console.log("SOMETHING WENT WRONG");
       }

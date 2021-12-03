@@ -1,4 +1,3 @@
-
 //HOW DO WE RECIEVE MAP ID
 
 //ACCESS map_id through hidden value on webpage after passing through templatevars
@@ -9,47 +8,39 @@ let map;
 let poiGlobal;
 let map_id = $("#map_id").text();
 
-
 //removes default markers
 var myStyles = [
   {
     featureType: "poi",
     elementType: "labels",
-    stylers: [
-      { visibility: "off" }
-    ]
-  }
+    stylers: [{ visibility: "off" }],
+  },
 ];
 
 const setPoi = (poi) => {
   console.log(poi);
-  const regexVar = / (&#34;) /gm
-  poiJanky = poi.replace(/(&#34;)/gm, `"`)
-  poiGlobal = JSON.parse(poiJanky)
-
-}
-
-
+  const regexVar = / (&#34;) /gm;
+  poiJanky = poi.replace(/(&#34;)/gm, `"`);
+  poiGlobal = JSON.parse(poiJanky);
+};
 
 let count = 1;
-let markers = []
-let pois = []
+let markers = [];
+let pois = [];
 
 function initMap() {
-  let marker_in_progress = false
+  let marker_in_progress = false;
 
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 43.6532, lng: -79.3832 },
     zoom: 13,
-    styles: myStyles
+    styles: myStyles,
   });
-
-
 
   function renderAllMapMarkers(poiGlobal) {
     for (let poi of poiGlobal) {
-      let position = { lat: Number(poi.latitude), lng: Number(poi.longitude) }
-      poi.position = position
+      let position = { lat: Number(poi.latitude), lng: Number(poi.longitude) };
+      poi.position = position;
       poi.myid = count;
 
       let map_id = $("#map_id").text();
@@ -65,7 +56,6 @@ function initMap() {
         `<li>${poi.name} <button id = ${count}>DELETE</button> </li>`
       );
 
-
       $(`#${count}`).click((event) => {
         const targetmarker = markers.find(
           (x) => x.myid === parseInt($(event.target).attr("id"))
@@ -75,13 +65,15 @@ function initMap() {
         markers = markers.filter(
           (x) => x.myid != parseInt($(event.target).attr("id"))
         );
-        pois = pois.filter((x) => x.myid != parseInt($(event.target).attr("id")));
+        pois = pois.filter(
+          (x) => x.myid != parseInt($(event.target).attr("id"))
+        );
         //setMapOnAll(map)
 
         $(event.target).parent().remove();
       });
 
-      addMarkerUSINGPOI(poi, count)
+      addMarkerUSINGPOI(poi, count);
       count = count + 1;
     }
   }
@@ -96,8 +88,7 @@ function initMap() {
     });
 
     const infowindow = new google.maps.InfoWindow({
-      content:
-        `<div id="content">
+      content: `<div id="content">
       <div id="siteNotice">
       </div>
       <h1 id="firstHeading" class="firstHeading">${poi.name}</h1>
@@ -112,11 +103,11 @@ function initMap() {
         anchor: marker,
         map,
         shouldFocus: true,
-      })
-    })
+      });
+    });
 
     marker.myid = myid;
-    markers.push(marker)
+    markers.push(marker);
   }
 
   ////CLICKING ON MAP
@@ -219,7 +210,6 @@ function initMap() {
     markers.push(marker);
   }
 
-
   // Sets the map on all markers in the array.
   // How is this being run
   function setMapOnAll(map) {
@@ -229,17 +219,14 @@ function initMap() {
   }
 
   $("#submit_map").click(() => {
-
-    location.href = "/displays";
     $.post("../editmap/submit_map", { pois }).done(function (data) {
       if (data === "DONE") {
         console.log(data);
 
-        location.href = "/displays";
+        location.href = "/maplist";
       } else {
         console.log("SOMETHING WENT WRONG");
       }
     });
   });
-
 }

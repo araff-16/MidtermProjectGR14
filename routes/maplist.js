@@ -44,7 +44,9 @@ module.exports = (db) => {
                 mapCopy["favorited"] = true;
                 return mapCopy;
               } else {
-                return map;
+                const mapCopy = { ...map };
+                mapCopy["favorited"] = false;
+                return mapCopy;
               }
             });
             const templateVars = {
