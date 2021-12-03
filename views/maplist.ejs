@@ -56,12 +56,6 @@
           <h6>Description:</h6>
           <h4><%=object.description %></h4>
           <p>Category: <%=object.category %></p>
-          <button
-            class="btn btn-primary"
-            onclick="location.href='/viewmap/<%= object.id %>';"
-          >
-            View Map
-          </button>
         </div>
         <div>
           <form class="form-inline favorite-form">
@@ -95,7 +89,12 @@
               <% if(object.favorited) { %> unfavorite <% } else { %> favorite <%
               } %>
             </button>
-
+            <button
+              class="btn btn-primary"
+              onclick="location.href='/viewmap/<%= object.id %>';"
+            >
+              View Map
+            </button>
             <!-- <% if(object.favorited) { %>
             <button type="submit" class="unfavButton btn btn-secondary">unfavorite</button>
             <% } else { %>

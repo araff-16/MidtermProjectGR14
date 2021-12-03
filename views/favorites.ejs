@@ -55,12 +55,19 @@
           <p>Description: <%=object.description %></p>
           <p>Category: <%=object.category %></p>
         </div>
+
         <div>
           <h1><%= object.name %></h1>
           <form class="form-inline favorite-form" action="/" method="POST">
             <input type="hidden" name="mapId" value="<%= object.id %>" />
           </form>
         </div>
+        <button
+          class="btn btn-primary"
+          onclick="location.href='/viewmap/<%= object.id %>';"
+        >
+          View Map
+        </button>
       </div>
       <% } %>
     </main>
