@@ -1,13 +1,7 @@
-
-//HOW DO WE RECIEVE MAP ID
-
-//ACCESS map_id through hidden value on webpage after passing through templatevars
-
-
 let map;
 let poiGlobal;
 
-//removes default markers
+//REMOVES DEFUALT MARKERS FROM MAPS DISPLAY
 var myStyles =[
   {
       featureType: "poi",
@@ -32,25 +26,25 @@ function initMap() {
     styles: myStyles
   });
 
+
   function renderAllMapMarkers(pois) {
+    let markerCount = 1;
+    //PASS EACH POI OBJECT TO ADDMARKER
     for (let poi of pois) {
-      let position = { lat: Number(poi.latitude), lng: Number(poi.longitude) }
-
-      poi.position = position
-
-      addMarker(poi)
+      addMarker(poi, markerCount)
+      markerCount += 1;
     }
   }
 
-  renderAllMapMarkers(poiGlobal);
-
-  function addMarker(poi) {
+  function addMarker(poi, markerNumber) {
 
     const marker = new google.maps.Marker({
-      position: poi.position,
+      position: { lat: Number(poi.latitude), lng: Number(poi.longitude) },
       map,
+      icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markerNumber}|FE6256|000000`
     });
 
+    // INFO WINDOW POP UP FOR MARKER
     const infowindow = new google.maps.InfoWindow({
       content:
       `<div id="content">
@@ -64,22 +58,30 @@ function initMap() {
       maxWidth: 300,
     });
 
+    // LISTENS FOR CLICK ON THE MARKER
     marker.addListener("click", () => {
       infowindow.open({
         anchor: marker,
         map,
         shouldFocus: true,
       })
-
     })
+
+    //APPEND EACH POI TITLE TO THE SIDEBAR
+    $("#list").append(
+      `<li>${poi.name} </li>`
+    );
+
   }
+
+  renderAllMapMarkers(poiGlobal);
 
   // Sets the map on all markers in the array.
-  function setMapOnAll(map) {
-    for (let i = 0; i < markers.length; i++) {
-      markers[i].setMap(map);
-    }
-  }
+  // function setMapOnAll(map) {
+  //   for (let i = 0; i < markers.length; i++) {
+  //     markers[i].setMap(map);
+  //   }
+  // }
 }
 
 // PASS POINTS USING AJAX REQUEST???

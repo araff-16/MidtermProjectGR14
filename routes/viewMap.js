@@ -17,7 +17,6 @@ module.exports = (db) => {
     `
     const queryParams = [mapId]
 
-
     db.query(queryString, queryParams)
     .then(results => {
 
