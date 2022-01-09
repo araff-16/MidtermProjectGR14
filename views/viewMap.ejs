@@ -31,24 +31,24 @@
   <%- include('./partials/header'); %>
 
   <main>
-    <%= pois[0].name %>
+
     <div id="map"></div>
 
-    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script type="text/javascript">
-      const poisFromTemplate = '<%= pois %>'
-      // const div = document.createElement('div')
-      // div.innerHTML = ('<%= pois %>')
-      setPoi(poisFromTemplate)
+      const stringifiedPOI = '<%- JSON.stringify(pois) %>'
+      setPoi(stringifiedPOI)
     </script>
+
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&channel=2"
       async
     ></script>
 
-    <script>
-
-    </script>
+    <div id="locationlist">
+      <h1>Title</h1>
+      <ol id ='list'>
+      </ol>
+    </div>
 
   </main>
 </body>

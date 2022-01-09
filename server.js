@@ -68,6 +68,29 @@ app.use("/editmap", editMapRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
+
+//TESTING//
+app.get("/tweets/:id", (req, res) => {
+  const mapId = req.params.id;
+
+
+  //check to see if user logged in
+  const queryString = `
+    SELECT name, description, latitude, longitude, image
+    FROM pois
+    WHERE map_id = $1
+    `
+    const queryParams = [mapId]
+
+    let pois = [];
+
+    db.query(queryString, queryParams)
+    .then(results => {})
+
+
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
