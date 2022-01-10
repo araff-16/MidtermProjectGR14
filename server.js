@@ -45,23 +45,21 @@ app.use(
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
-const displayRoutes = require("./routes/displays");
-const widgetsRoutes = require("./routes/widgets");
-const favoritesRoutes = require("./routes/favorites");
-const viewMapRoutes = require("./routes/viewMap");
+
+
+
+const mapRoutes = require("./routes/maps");
+
 const viewMaplistRoutes = require("./routes/maplist");
-const editMapRoutes = require("./routes/editMap");
+// const editMapRoutes = require("./routes/editMap");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/users", usersRoutes(db));
-app.use("/displays", displayRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
-app.use("/favorites", favoritesRoutes(db));
-app.use("/viewmap", viewMapRoutes(db));
-app.use("/maplist", viewMaplistRoutes(db));
+app.use("/user", usersRoutes(db));
 
-app.use("/editmap", editMapRoutes(db));
+app.use("/map", mapRoutes(db));
+app.use("/maplist", viewMaplistRoutes(db));
+// app.use("/editmap", editMapRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -70,25 +68,25 @@ app.use("/editmap", editMapRoutes(db));
 
 
 //TESTING//
-app.get("/tweets/:id", (req, res) => {
-  const mapId = req.params.id;
+// app.get("/tweets/:id", (req, res) => {
+//   const mapId = req.params.id;
 
 
-  //check to see if user logged in
-  const queryString = `
-    SELECT name, description, latitude, longitude, image
-    FROM pois
-    WHERE map_id = $1
-    `
-    const queryParams = [mapId]
+//   //check to see if user logged in
+//   const queryString = `
+//     SELECT name, description, latitude, longitude, image
+//     FROM pois
+//     WHERE map_id = $1
+//     `
+//     const queryParams = [mapId]
 
-    let pois = [];
+//     let pois = [];
 
-    db.query(queryString, queryParams)
-    .then(results => {})
+//     db.query(queryString, queryParams)
+//     .then(results => {})
 
 
-});
+// });
 
 
 app.listen(PORT, () => {

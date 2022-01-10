@@ -134,11 +134,11 @@ function initMap() {
   }
 
   $("#submit_map").click(() => {
-    $.post("../displays/submit_map", { pois }).done(function (data) {
+    $.post("../map/create", { pois }).done(function (data) {
       if (data === "DONE") {
         console.log(data);
 
-        location.href = "/maplist";
+        location.href = "/map/list";
       } else {
         console.log("SOMETHING WENT WRONG");
       }

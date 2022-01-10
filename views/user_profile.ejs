@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/profile_view.css" type="text/css" />
 
   <!-- External JS -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
@@ -27,8 +28,40 @@
   <%- include('./partials/header'); %>
 
   <main>
-  <h1>Have fun! 🥔</h1>
-  <i class="fas fa-angle-double-down"></i>
+
+  <div id="about">
+    <img src="/images/profile-hex.png">
+    <div>
+      <h2><%=  user_email %></h2>
+      <p>Hello Everyone!! This app is amazing. Looking for a good place to eat is not the most enjoyable task. With this app I have access to hundreds of lists of great spots hand selected by users. I can't wait to select my next place to eat and share with you the maps I create of my top restaurants.</p>
+    </div>
+  </div>
+
+  <section id='lists'>
+    <div id='profile_favorites'>
+      <h2>Favorite Maps</h2>
+      <div class='list'>
+      <ol>
+      <% for(let fav_map of fav_maps) { %>
+        <li><%= fav_map.name %></li>
+      <% } %>
+      </ol>
+    </div>
+    </div>
+
+    <div id='profile_mymaps'>
+      <h2>Maps Created</h2>
+      <div class='list'>
+        <ol>
+          <% for(let created_map of created_maps) { %>
+            <li><%= created_map.name %> <a href="../map/edit/<%= created_map.id %>">EDIT MAP</a></li>
+          <% } %>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
   </main>
 </body>
 

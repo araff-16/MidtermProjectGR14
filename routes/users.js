@@ -30,7 +30,7 @@ module.exports = (db) => {
       return;
     }
     const templateVars = { user_email: req.session.email };
-    res.render("users_login", templateVars);
+    res.render("user_login", templateVars);
   });
 
   //POST LOGIN INFO
@@ -52,7 +52,7 @@ module.exports = (db) => {
         } else if (response.rows[0].password === password) {
           req.session.user_id = response.rows[0].id;
           req.session.email = response.rows[0].email;
-          res.redirect("/displays");
+          res.redirect("/user/profile");
         } else {
           res.send("INCORRECT PASSWORD");
         }
@@ -63,12 +63,12 @@ module.exports = (db) => {
   //RENDER CREATE ACCOUNT
   router.get("/register", (req, res) => {
     if (req.session.user_id) {
-      res.redirect("/displays");
+      res.redirect("/user/profile");
       return;
     }
 
     const templateVars = { user_email: req.session.email };
-    res.render("users_register", templateVars);
+    res.render("user_register", templateVars);
   });
 
   //POST NEW ACCOUNT INFO
@@ -100,7 +100,7 @@ module.exports = (db) => {
               //Set up cookie with user ids
               req.session.user_id = response.rows[0].id;
               req.session.email = response.rows[0].email;
-              res.redirect("/displays");
+              res.redirect("/user/profile");
             })
             .catch((err) => err.message);
         }
@@ -111,8 +111,108 @@ module.exports = (db) => {
   router.post("/logout", (req, res) => {
     delete req.session.user_id;
     delete req.session.email;
-    res.redirect("/displays");
+    res.redirect("/map/list");
   });
+
+  router.get("/profile", (req, res) => {
+    if (!req.session.user_id) {
+      res.redirect("/map/list");
+      return;
+    }
+
+    let templateVars = { user_email: req.session.email };
+
+    db.query(
+      `
+    SELECT maps.name FROM maps
+    JOIN favorites ON maps.id = favorites.map_id
+    JOIN users ON users.id = favorites.user_id
+    WHERE users.id = $1;
+    `,
+      [req.session.user_id]
+    )
+      .then((response) => {
+        templateVars.fav_maps = response.rows;
+
+        db.query(
+          `
+      SELECT name, id FROM maps
+      WHERE user_id = $1;
+      `,
+          [req.session.user_id]
+        )
+          .then((response) => {
+            templateVars.created_maps = response.rows;
+            res.render("user_profile", templateVars);
+          })
+          .catch((err) => err.message);
+      })
+      .catch((err) => err.message);
+  });
+
+  router.get("/favorites", (req, res) => {
+    //NEED TO QUERY TO THE DATABASE TO GET ALL favorited maps for user
+    //WILL STORE IN TEMPLATVARS AND SEND WITH RENDER
+
+    db.query(
+      `
+    SELECT * FROM maps
+    JOIN favorites ON maps.id = map_id
+    WHERE favorites.user_id = 1`
+    )
+      .then((data) => {
+        let favoriteObject = data.rows;
+        const templateVars = {
+          user_email: req.session.email,
+          userFavorites: favoriteObject,
+        };
+        res.render("user_favorites", templateVars);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
+  //STORE DATA WHEN SOMEONE FAVORITED
+  router.delete("/favorites", (req, res) => {
+    const { user_id } = req.session;
+    const mapId = req.body.mapId;
+
+
+    const queryString = `
+    DELETE FROM favorites
+    WHERE user_id = $1 AND map_id = $2
+    `;
+    const queryValues = [user_id, mapId];
+    db.query(queryString, queryValues).then(() => {
+      console.log("***********************HITTING THIS ONE FOR DELETE*********");
+      res.status(200);
+    });
+  });
+  //POST TO UPDATE FAVORITES TABLE
+  router.post("/favorites", (req, res) => {
+    console.log("test6", "hello");
+
+    const { user_id } = req.session;
+    console.log("test8", user_id);
+    const mapId = Number(req.body.mapId);
+    console.log("mapid", mapId);
+    console.log("post reqbody", req.body);
+
+    const queryString = `
+    INSERT INTO favorites (user_id, map_id)
+    VALUES ($1, $2)
+    `;
+    // UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;
+    const queryValues = [user_id, mapId];
+    db.query(queryString, queryValues).then((data) => {
+      console.log("***********************HITTING THIS ONE FOR ADD*********")
+      res.status(200);
+    });
+  });
+
+
+
 
   return router;
 };

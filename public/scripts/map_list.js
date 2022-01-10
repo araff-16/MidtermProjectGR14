@@ -15,7 +15,7 @@ $(document).ready(function () {
       $(this).find(".fav").css({ background: "grey" });
       $(this).find(".fav").text("favorite");
 
-      $.ajax("/maplist", {
+      $.ajax("/user/favorites", {
         method: "DELETE",
         dataType: "string",
         data: $(this).serialize(),
@@ -32,7 +32,7 @@ $(document).ready(function () {
       $(this).find(".fav").css({ backgroundColor: "orange" });
       $(this).find(".fav").text("unfavorite");
 
-      $.ajax("/maplist", {
+      $.ajax("/user/favorites", {
         method: "POST",
         dataType: "string",
         data: $(this).serialize(),
