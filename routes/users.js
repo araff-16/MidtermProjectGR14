@@ -154,11 +154,20 @@ module.exports = (db) => {
     //NEED TO QUERY TO THE DATABASE TO GET ALL favorited maps for user
     //WILL STORE IN TEMPLATVARS AND SEND WITH RENDER
 
+    if (!req.session.user_id) {
+      res.redirect("/map/list");
+      return;
+    }
+
+
     db.query(
       `
-    SELECT * FROM maps
-    JOIN favorites ON maps.id = map_id
-    WHERE favorites.user_id = 1`
+      SELECT * FROM maps
+      JOIN favorites ON maps.id = favorites.map_id
+      JOIN users ON users.id = favorites.user_id
+      WHERE users.id = $1;
+      `,
+        [req.session.user_id]
     )
       .then((data) => {
         let favoriteObject = data.rows;
@@ -166,6 +175,7 @@ module.exports = (db) => {
           user_email: req.session.email,
           userFavorites: favoriteObject,
         };
+        console.log('testeroo',templateVars.userFavorites)
         res.render("user_favorites", templateVars);
       })
       .catch((err) => {
@@ -178,12 +188,12 @@ module.exports = (db) => {
     const { user_id } = req.session;
     const mapId = req.body.mapId;
 
-
+    console.log("AM I HITTING", user_id, parseInt(mapId)  )
     const queryString = `
     DELETE FROM favorites
     WHERE user_id = $1 AND map_id = $2
     `;
-    const queryValues = [user_id, mapId];
+    const queryValues = [user_id, parseInt(mapId)];
     db.query(queryString, queryValues).then(() => {
       console.log("***********************HITTING THIS ONE FOR DELETE*********");
       res.status(200);

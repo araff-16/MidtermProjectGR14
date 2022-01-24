@@ -38,6 +38,7 @@
     />
     <!-- App JS -->
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/user_favorites.js"></script>
   </head>
 
   <body>
@@ -62,6 +63,12 @@
             <input type="hidden" name="mapId" value="<%= object.id %>" />
           </form>
         </div>
+        <form class="form-inline favorite-form">
+          <input type="hidden" class="favButton" name="mapId" value="<%= object.id %>" />
+          <button type="submit" class = " unfavButton btn btn-secondary fav ">
+          unfavorite
+          </button>
+        </form>
         <button
           class="btn btn-primary"
           onclick="location.href='/viewmap/<%= object.id %>';"
