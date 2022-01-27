@@ -54,7 +54,7 @@ When creating a map click on the location you wish to add a marker and fill out 
 
 1. [Fork](https://github.com/araff-16/Wiki-Maps/fork) this repository and clone to your local device.
 2. Install dependencies with `npm install` 
-3. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
+3. Create the `.env` by using `.env.example` as a reference
 4. Fix to binaries for sass: `npm rebuild node-sass`
 5. Reset database: `npm run db:reset`
 7. Run the server: `npm run local`
