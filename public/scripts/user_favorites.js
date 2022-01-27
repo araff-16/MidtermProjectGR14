@@ -14,7 +14,7 @@ $(document).ready(function () {
       console.log("TESTING!@# TESTING!@#")
     })
 
-    $( this ).parent().remove();
+    $( this ).parents(".maplistContainer").remove();
 
   });
 
