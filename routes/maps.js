@@ -9,8 +9,9 @@ module.exports = (db) => {
     const mapId = req.params.id;
 
     const queryString = `
-    SELECT name, description, latitude, longitude, image
+    SELECT pois.name, pois.description, latitude, longitude, pois.image,maps.name as title
     FROM pois
+    JOIN maps ON pois.map_id = maps.id
     WHERE map_id = $1
     `
     const queryParams = [mapId]
@@ -20,10 +21,10 @@ module.exports = (db) => {
 
       let templateVars = {
         mapId,
+        title: results.rows[0].title,
         user_email: req.session.email,
         pois: results.rows
       }
-
       res.render('map_view', templateVars)
     })
     .catch(error=>console.log(error))
