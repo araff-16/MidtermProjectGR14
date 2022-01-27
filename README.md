@@ -24,69 +24,41 @@ Multipage application that allows users to collaboratively create, edit and shar
 
 ## Home Page
 
-![Home Page](./public/gif/homePageAndSearch.gif)
+![Home Page](./documents/home.gif)
 Displays all available maps to the user. If a user is logged in they are able to favourite maps they find interesting.
 
-## Viewing map
+## Viewing Map
 
-![Viewing Maps](./public/gif/homePageAndSearch.gif)
-When viewing a map, a list of all point of interest will be presented to the left of the map. Clicking on a point on the map will bring up the details of the location.
+![Viewing Maps](./documents/viewmap.gif)
+When viewing a map, a list of all points of interest will be presented to the left of the map. Clicking on a point on the map will bring up the details of the location.
 
-## Creating map
+## Creating Map
 
-![Viewing Maps](./public/gif/homePageAndSearch.gif)
-Creating a new map on the location you wish to fill a marker and filling 
+![Creating Maps](./documents/createmap.gif)
+When creating a map click on the location you wish to add a marker and fill out the dropdown form that appears.
 
 
 # Project Structure
 
-- [Front-End](/Client)
-  - [Components](/Client/src/components)
-  - [Helper Functions](/Client/src/helpers)
-  - [Styles](/Client/src/components/Styles)
-- [Back-End](/Server)
-  - [Database](/Server/db)
-    - [Queries](/Server/db/queries)
-    - [Schemas](/Server/db/schema)
-    - [Seeds](/Server/db/seeds)
-  - [API-Routes](/Server/routes)
+- Front-End
+  - [Views](/views)
+  - [Styles](/styles)
+  - [Scripts](/public/scripts)
+- Back-End
+  - [Server](./server.js)
+  - [Routes](/routes)
+  - [Schema](/db/schema)
+  - [Seeds](/db/seeds)
 
-# Project Setup
+## Project Setup
 
-- [Fork](https://github.com/Dev-s-Den/Devs-Den/fork) this repository and clone to your local device.
-- Install dependencies with `npm install` in both [Server](/Server) and [Client](/Client).
-- Make an ENV file for the back-end [.env.example](/Server/.env.example).
-- Make an ENV file for the front-end [.env.example](/Client/.env.example).
-- Build a database (psql preferrably) and change the information in the ENV file accordingly.
-- Run the server using `cd Server`, `npm run local`.
-- Run the application front-end using `cd Client`, `npm start`.
-
-
-
-
-
-## Wiki Maps
-
-
-
-## Getting Started
-
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
-2. Update the .env file with your correct local information 
-  - username: `labber` 
-  - password: `labber` 
-  - database: `midterm`
-3. Install dependencies: `npm i`
+1. [Fork](https://github.com/araff-16/Wiki-Maps/fork) this repository and clone to your local device.
+2. Install dependencies with `npm install` 
+3. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
 4. Fix to binaries for sass: `npm rebuild node-sass`
 5. Reset database: `npm run db:reset`
-  - Check the db folder to see what gets created and seeded in the SDB
 7. Run the server: `npm run local`
   - Note: nodemon is used, so you should not have to restart your server
 8. Visit `http://localhost:8080/`
 
 
-## Dependencies
-
-- Node 10.x or above
-- NPM 5.x or above
-- PG 6.x
