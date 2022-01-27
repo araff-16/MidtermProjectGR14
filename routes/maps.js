@@ -31,6 +31,11 @@ module.exports = (db) => {
 
   // RENDERS THE INITIALIZE MAP FORM
   router.get("/initialize", (req, res) => {
+    if (!req.session.user_id) {
+      res.redirect("/user/login");
+      return;
+    }
+
     const templateVars = { user_email: req.session.email };
     res.render("map_initialize", templateVars);
   });

@@ -116,7 +116,7 @@ module.exports = (db) => {
 
   router.get("/profile", (req, res) => {
     if (!req.session.user_id) {
-      res.redirect("/map/list");
+      res.redirect("/user/login");
       return;
     }
 
@@ -155,7 +155,7 @@ module.exports = (db) => {
     //WILL STORE IN TEMPLATVARS AND SEND WITH RENDER
 
     if (!req.session.user_id) {
-      res.redirect("/map/list");
+      res.redirect("/user/login");
       return;
     }
 
