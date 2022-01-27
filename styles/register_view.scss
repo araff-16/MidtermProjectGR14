@@ -1,9 +1,4 @@
-#loginForm{
-  display: flex;
-  justify-content: center;
-  background-color: #808080;
-  padding: 4.5em;
-}
+
 
 main{
   display: flex;
@@ -15,4 +10,19 @@ main{
 
 #loginForm{
   border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  padding: 4.5em;
+  background-color: #358ea2;
+
+  input{
+    background-color: #88d5e5;
+    border-radius: 5px;
+  }
+  button{
+    background-color: rgb(68, 145, 227);
+    height: 40px;
+    border-radius: 5px;
+    border: solid rgb(16, 71, 101);
+  }
 }
