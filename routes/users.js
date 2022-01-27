@@ -37,7 +37,6 @@ module.exports = (db) => {
   router.post("/login", (req, res) => {
     const { email, password } = req.body;
 
-    console.log(email);
     db.query(
       `
     SELECT * FROM users
@@ -46,7 +45,6 @@ module.exports = (db) => {
       [email]
     )
       .then((response) => {
-        console.log(response.rows[0]);
         if (!response.rows[0]) {
           res.send("THIS ACCOUNT DOES NOT EXIST");
         } else if (response.rows[0].password === password) {
@@ -175,7 +173,6 @@ module.exports = (db) => {
           user_email: req.session.email,
           userFavorites: favoriteObject,
         };
-        console.log('testeroo', templateVars.userFavorites)
         res.render("user_favorites", templateVars);
       })
       .catch((err) => {
@@ -188,26 +185,20 @@ module.exports = (db) => {
     const { user_id } = req.session;
     const mapId = req.body.mapId;
 
-    console.log("AM I HITTING", user_id, parseInt(mapId))
     const queryString = `
     DELETE FROM favorites
     WHERE user_id = $1 AND map_id = $2
     `;
     const queryValues = [user_id, parseInt(mapId)];
     db.query(queryString, queryValues).then(() => {
-      console.log("***********************HITTING THIS ONE FOR DELETE*********");
+
       res.status(200);
     });
   });
   //POST TO UPDATE FAVORITES TABLE
   router.post("/favorites", (req, res) => {
-    console.log("test6", "hello");
-
     const { user_id } = req.session;
-    console.log("test8", user_id);
     const mapId = Number(req.body.mapId);
-    console.log("mapid", mapId);
-    console.log("post reqbody", req.body);
 
     const queryString = `
     INSERT INTO favorites (user_id, map_id)
@@ -216,7 +207,6 @@ module.exports = (db) => {
     // UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;
     const queryValues = [user_id, mapId];
     db.query(queryString, queryValues).then((data) => {
-      console.log("***********************HITTING THIS ONE FOR ADD*********")
       res.status(200);
     });
   });
